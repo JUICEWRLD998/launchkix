@@ -5,6 +5,7 @@ import {
   AppBriefSchema,
   LaunchKitSchema,
   extractJSON,
+  formatZodIssues,
 } from "@/lib/schema";
 
 /** Simple in-memory rate limiter (resets on cold start — fine for hackathon) */
@@ -34,6 +35,10 @@ function getIP(req: NextRequest): string {
   );
 }
 
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Unknown error";
+}
+
 export async function POST(req: NextRequest) {
   // ── Rate limit ────────────────────────────────────────────
   const ip = getIP(req);
@@ -57,14 +62,10 @@ export async function POST(req: NextRequest) {
 
   const briefParse = AppBriefSchema.safeParse(body);
   if (!briefParse.success) {
-    const issues = (briefParse.error as any).issues ?? [];
     return NextResponse.json(
       {
         error: "Invalid app brief.",
-        details: issues.map((i: any) => ({
-          field: i.path?.join("."),
-          message: i.message,
-        })),
+        details: formatZodIssues(briefParse.error),
       },
       { status: 400 }
     );
@@ -90,10 +91,11 @@ export async function POST(req: NextRequest) {
     });
     rawContent = response.content;
     modelUsed = response.model;
-  } catch (err: any) {
-    console.error("[/api/generate] OpenRouter error:", err.message);
+  } catch (err) {
+    const message = getErrorMessage(err);
+    console.error("[/api/generate] OpenRouter error:", message);
     return NextResponse.json(
-      { error: "AI generation failed. Please try again.", details: err.message },
+      { error: "AI generation failed. Please try again.", details: message },
       { status: 502 }
     );
   }
@@ -130,7 +132,7 @@ export async function POST(req: NextRequest) {
   // ── Validate against schema ────────────────────────────────
   const kitParse = LaunchKitSchema.safeParse(parsed);
   if (!kitParse.success) {
-    console.error("[/api/generate] Schema validation failed:", (kitParse.error as any).issues);
+    console.error("[/api/generate] Schema validation failed:", kitParse.error.issues);
     return NextResponse.json(
       { error: "AI response did not match expected format. Please retry." },
       { status: 502 }

@@ -20,7 +20,7 @@ if (fs.existsSync(envPath)) {
 
 import { getOpenRouterClient } from "./openrouter";
 import { buildFullKitPrompt, SYSTEM_PROMPT } from "./prompts";
-import { parseAIResponse, extractJSON, LaunchKitSchema } from "./schema";
+import { parseAIResponse, extractJSON } from "./schema";
 import type { AppBrief } from "@/types/kit";
 
 const sampleBrief: AppBrief = {
@@ -75,9 +75,8 @@ async function testGeneration() {
 
     if (!parseResult.success) {
       console.log("❌ Validation FAILED\n");
-      const errors = (parseResult.error as any)?.issues ?? (parseResult.error as any)?.errors ?? [];
-      errors.forEach((err: any) => {
-        console.log(`  - ${Array.isArray(err.path) ? err.path.join(".") : err.path}: ${err.message}`);
+      parseResult.error.issues.forEach((err) => {
+        console.log(`  - ${err.path.join(".")}: ${err.message}`);
       });
       // Also dump raw for debugging
       console.log("\nRaw parse error:");

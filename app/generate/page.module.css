@@ -77,8 +77,14 @@
 }
 
 .emptyIcon {
-  font-size: 3rem;
-  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  color: var(--accent);
+  background: var(--accent-muted);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
 }
 
 .emptyTitle {
@@ -172,8 +178,14 @@
 }
 
 .errorIcon {
-  font-size: 2.5rem;
-  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  color: var(--danger);
+  background: var(--surface-1);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-full);
 }
 
 .errorTitle {

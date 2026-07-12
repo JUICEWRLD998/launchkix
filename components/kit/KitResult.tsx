@@ -3,10 +3,11 @@
 import { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import clsx from "clsx";
 import { SectionCard } from "./SectionCard";
 import { Badge } from "@/components/ui/Badge";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { Skeleton, SkeletonText } from "@/components/ui/Skeleton";
+import { useToastContext } from "@/components/providers/ToastProvider";
 import { staggerParent, fadeUp } from "@/lib/motion";
 import styles from "./KitResult.module.css";
 import type {
@@ -45,6 +46,10 @@ const TABS = [
   { value: "email", label: "Email" },
   { value: "communityPost", label: "Community" },
 ] as const;
+
+function sectionLabel(section: RegeneratableSection) {
+  return TABS.find((tab) => tab.value === section)?.label ?? "Section";
+}
 
 const PLATFORM_ICONS: Record<string, string> = {
   X: "𝕏",
@@ -168,7 +173,7 @@ function AppStoreSection({ data }: { data: AppStoreListing }) {
         <p className={styles.body}>{data.description}</p>
       </div>
       <div className={styles.fieldItem}>
-        <span className={styles.fieldKey}>What's New</span>
+        <span className={styles.fieldKey}>What&apos;s New</span>
         <p className={styles.body}>{data.whatsNew}</p>
       </div>
     </div>
@@ -296,6 +301,7 @@ function CommunitySection({ data }: { data: CommunityPost }) {
 
 export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
   const [activeTab, setActiveTab] = useState<string>("appStore");
+  const { success, error } = useToastContext();
 
   async function handleRegenerate(section: RegeneratableSection) {
     try {
@@ -304,11 +310,17 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ brief, section }),
       });
-      if (!res.ok) throw new Error("Regeneration failed");
       const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error ?? "Regeneration failed");
+      }
       onRegenerate(section, { [section]: json.data });
+      success("Section regenerated", `${sectionLabel(section)} is ready.`);
     } catch (err) {
-      throw err; // SectionCard will reset loading state
+      error(
+        "Regeneration failed",
+        err instanceof Error ? err.message : "Please try again."
+      );
     }
   }
 
@@ -405,14 +417,15 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
         <span className={styles.footerMeta}>
           {TABS.length} sections generated
         </span>
-        <button
+        <CopyButton
+          value={kitToMarkdown(kit)}
+          successMessage="Full launch kit copied"
+          variant="secondary"
+          size="sm"
           className={styles.copyAllBtn}
-          onClick={async () => {
-            await navigator.clipboard.writeText(kitToMarkdown(kit));
-          }}
         >
           Copy all as Markdown
-        </button>
+        </CopyButton>
       </div>
     </Tabs.Root>
   );

@@ -95,13 +95,6 @@ export function AppIntakeForm({
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState(false);
 
-  // Exposed so ExampleChips can fill the form
-  function fill(brief: Partial<AppBrief>) {
-    setValues((prev) => ({ ...prev, ...brief }));
-    setErrors({});
-    setTouched(false);
-  }
-
   function togglePlatform(p: Platform) {
     setValues((prev) => {
       const has = prev.platforms.includes(p);
@@ -133,7 +126,7 @@ export function AppIntakeForm({
       <div className={styles.header}>
         <h2 className={styles.title}>Your App</h2>
         <p className={styles.subtitle}>
-          Fill in the details and we'll generate your complete launch kit.
+          Fill in the details and we&apos;ll generate your complete launch kit.
         </p>
       </div>
 
@@ -294,7 +287,7 @@ export function AppIntakeForm({
         loading={loading}
         className={styles.submitBtn}
       >
-        {loading ? "Generating kit…" : "Generate Launch Kit"}
+        {loading ? "Generating kit..." : "Generate Launch Kit"}
       </Button>
     </form>
   );

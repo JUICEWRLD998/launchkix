@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Metadata } from "next";
+import { AlertTriangle, Sparkles } from "lucide-react";
 import { AppIntakeForm } from "@/components/form/AppIntakeForm";
 import { ExampleChips } from "@/components/form/ExampleChips";
 import { KitResult, KitResultSkeleton } from "@/components/kit/KitResult";
@@ -12,10 +12,16 @@ import { MeshBackground } from "@/components/layout/MeshBackground";
 import { useToastContext } from "@/components/providers/ToastProvider";
 import { saveToHistory } from "@/lib/storage";
 import { fadeUp, scaleIn } from "@/lib/motion";
-import type { AppBrief, LaunchKit, GenerationMeta } from "@/types/kit";
+import type {
+  AppBrief,
+  LaunchKit,
+  LaunchKitResponse,
+  GenerationMeta,
+} from "@/types/kit";
 import styles from "./page.module.css";
 
 type State = "idle" | "loading" | "success" | "error";
+type GenerateApiResponse = Partial<LaunchKitResponse> & { error?: string };
 
 export default function GeneratePage() {
   const [state, setState] = useState<State>("idle");
@@ -46,10 +52,14 @@ export default function GeneratePage() {
         body: JSON.stringify(submittedBrief),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as GenerateApiResponse;
 
       if (!res.ok) {
         throw new Error(data.error ?? "Generation failed. Please try again.");
+      }
+
+      if (!data.kit || !data.meta) {
+        throw new Error("Generation returned an incomplete response.");
       }
 
       setKit(data.kit);
@@ -62,9 +72,12 @@ export default function GeneratePage() {
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 150);
-    } catch (err: any) {
+    } catch (err) {
       setState("error");
-      const msg = err.message ?? "Something went wrong. Please try again.";
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.";
       setErrorMsg(msg);
       toastError("Generation failed", msg);
     }
@@ -136,7 +149,7 @@ export default function GeneratePage() {
                     className={styles.emptyState}
                   >
                     <div className={styles.emptyIcon} aria-hidden="true">
-                      🚀
+                      <Sparkles size={34} strokeWidth={1.75} />
                     </div>
                     <h2 className={styles.emptyTitle}>
                       Your launch kit will appear here
@@ -166,7 +179,7 @@ export default function GeneratePage() {
                     <div className={styles.loadingHeader}>
                       <div className={styles.loadingDot} aria-hidden="true" />
                       <p className={styles.loadingText}>
-                        Crafting your launch kit with AI…
+                        Crafting your launch kit with AI...
                       </p>
                     </div>
                     <KitResultSkeleton />
@@ -183,7 +196,9 @@ export default function GeneratePage() {
                     exit={{ opacity: 0 }}
                     className={styles.errorState}
                   >
-                    <div className={styles.errorIcon} aria-hidden="true">⚠️</div>
+                    <div className={styles.errorIcon} aria-hidden="true">
+                      <AlertTriangle size={34} strokeWidth={1.75} />
+                    </div>
                     <h2 className={styles.errorTitle}>Generation failed</h2>
                     <p className={styles.errorBody}>{errorMsg}</p>
                     <button
@@ -206,7 +221,7 @@ export default function GeneratePage() {
                     {meta && (
                       <div className={styles.metaBar}>
                         <span className={styles.metaBadge}>
-                          ✦ {brief.name}
+                          {brief.name}
                         </span>
                         <span className={styles.metaTime}>
                           {(meta.durationMs / 1000).toFixed(1)}s · {meta.model}

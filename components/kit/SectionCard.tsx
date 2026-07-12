@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import { RotateCcw } from "lucide-react";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -74,27 +75,7 @@ export function SectionCard({
               onClick={handleRegenerate}
               aria-label={`Regenerate ${title}`}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M13.5 8A5.5 5.5 0 1 1 8 2.5c1.8 0 3.4.87 4.4 2.2"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M12 2v3h3"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <RotateCcw size={14} strokeWidth={1.8} aria-hidden="true" />
               Regenerate
             </Button>
           )}

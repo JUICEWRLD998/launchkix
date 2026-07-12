@@ -23,7 +23,7 @@ export function ExampleChips({ onSelect, disabled }: ExampleChipsProps) {
             onClick={() => onSelect(example.brief)}
             className={clsx(styles.chip, disabled && styles.chipDisabled)}
           >
-            <span aria-hidden="true">{example.emoji}</span>
+            <span className={styles.chipMark} aria-hidden="true" />
             {example.label}
           </button>
         ))}

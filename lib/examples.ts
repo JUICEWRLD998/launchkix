@@ -4,14 +4,12 @@ import type { AppBrief } from "@/types/kit";
 
 export interface ExampleApp {
   label: string;
-  emoji: string;
   brief: AppBrief;
 }
 
 export const EXAMPLE_APPS: ExampleApp[] = [
   {
     label: "Fitness",
-    emoji: "💪",
     brief: {
       name: "FitTrack Pro",
       tagline: "Your AI fitness coach in your pocket",
@@ -27,7 +25,6 @@ export const EXAMPLE_APPS: ExampleApp[] = [
   },
   {
     label: "Productivity",
-    emoji: "⚡",
     brief: {
       name: "FocusFlow",
       tagline: "Deep work, on demand",
@@ -43,7 +40,6 @@ export const EXAMPLE_APPS: ExampleApp[] = [
   },
   {
     label: "Finance",
-    emoji: "💰",
     brief: {
       name: "SpendSense",
       tagline: "Know where your money goes",

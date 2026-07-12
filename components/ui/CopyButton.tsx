@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { Button, type ButtonProps } from "./Button";
 import { useToastContext } from "@/components/providers/ToastProvider";
 
-export interface CopyButtonProps extends Omit<ButtonProps, "onClick"> {
+export interface CopyButtonProps extends Omit<ButtonProps, "onClick" | "children"> {
   /** Text to copy to clipboard */
   value: string;
   /** Success message (default: "Copied to clipboard") */
   successMessage?: string;
+  children?: ReactNode;
 }
 
 export function CopyButton({

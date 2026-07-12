@@ -110,12 +110,21 @@ export const LaunchKitSchema = z.object({
   variants: StoreListingVariantsSchema.optional(),
 });
 
+export function formatZodIssues(error: z.ZodError) {
+  return error.issues.map((issue) => ({
+    field: issue.path.join("."),
+    message: issue.message,
+  }));
+}
+
 /** Helper: Parse AI response with automatic repair attempt */
-export function parseAIResponse(jsonString: string): z.SafeParseReturnType<any, any> {
+export function parseAIResponse(
+  jsonString: string
+): ReturnType<typeof LaunchKitSchema.safeParse> {
   try {
     const parsed = JSON.parse(jsonString);
     return LaunchKitSchema.safeParse(parsed);
-  } catch (error) {
+  } catch {
     return {
       success: false,
       error: new z.ZodError([
@@ -125,7 +134,7 @@ export function parseAIResponse(jsonString: string): z.SafeParseReturnType<any, 
           path: [],
         },
       ]),
-    } as z.SafeParseReturnType<any, any>;
+    } as ReturnType<typeof LaunchKitSchema.safeParse>;
   }
 }
 

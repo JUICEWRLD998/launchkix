@@ -45,6 +45,15 @@
   color: var(--accent);
 }
 
+.chipMark {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
 .chip:active:not(:disabled) {
   transform: scale(0.97);
 }

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getOpenRouterClient } from "@/lib/openrouter";
 import { SYSTEM_PROMPT, buildSectionPrompt } from "@/lib/prompts";
-import { AppBriefSchema, extractJSON } from "@/lib/schema";
+import { AppBriefSchema, extractJSON, formatZodIssues } from "@/lib/schema";
 import {
   AppStoreListingSchema,
   PlayStoreListingSchema,
@@ -36,6 +36,10 @@ const RegenerateBodySchema = z.object({
   ]),
 });
 
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Unknown error";
+}
+
 export async function POST(req: NextRequest) {
   // ── Parse + validate request body ─────────────────────────
   let body: unknown;
@@ -50,14 +54,10 @@ export async function POST(req: NextRequest) {
 
   const bodyParse = RegenerateBodySchema.safeParse(body);
   if (!bodyParse.success) {
-    const issues = (bodyParse.error as any).issues ?? [];
     return NextResponse.json(
       {
         error: "Invalid request.",
-        details: issues.map((i: any) => ({
-          field: i.path?.join("."),
-          message: i.message,
-        })),
+        details: formatZodIssues(bodyParse.error),
       },
       { status: 400 }
     );
@@ -83,10 +83,11 @@ export async function POST(req: NextRequest) {
     });
     rawContent = response.content;
     modelUsed = response.model;
-  } catch (err: any) {
-    console.error(`[/api/regenerate] OpenRouter error (${section}):`, err.message);
+  } catch (err) {
+    const message = getErrorMessage(err);
+    console.error(`[/api/regenerate] OpenRouter error (${section}):`, message);
     return NextResponse.json(
-      { error: "AI generation failed. Please try again.", details: err.message },
+      { error: "AI generation failed. Please try again.", details: message },
       { status: 502 }
     );
   }
@@ -151,7 +152,7 @@ export async function POST(req: NextRequest) {
   if (!sectionParse.success) {
     console.error(
       `[/api/regenerate] Schema validation failed for "${section}":`,
-      (sectionParse.error as any).issues
+      sectionParse.error.issues
     );
     return NextResponse.json(
       { error: "AI response did not match expected format. Please retry." },
