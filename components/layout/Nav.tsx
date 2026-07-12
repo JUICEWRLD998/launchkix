@@ -5,7 +5,7 @@ import { type HTMLAttributes } from "react";
 import clsx from "clsx";
 import styles from "./Nav.module.css";
 import { Container } from "./Container";
-import { Button } from "@/components/ui/Button";
+import { buttonClassName } from "@/components/ui/Button";
 
 export interface NavProps extends HTMLAttributes<HTMLElement> {
   sticky?: boolean;
@@ -41,10 +41,11 @@ export function Nav({ sticky = false, glass = false, className, ...props }: NavP
           </div>
 
           <div className={styles.actions}>
-            <Link href="/generate" className={styles.ctaButton}>
-              <Button variant="accent" size="md">
-                Get Started
-              </Button>
+            <Link
+              href="/generate"
+              className={buttonClassName("accent", "md", styles.ctaButton)}
+            >
+              Get Started
             </Link>
           </div>
         </div>

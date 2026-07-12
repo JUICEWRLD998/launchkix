@@ -102,7 +102,7 @@
 
 /* Mobile: hide "Get Started" text, keep icon if we add one later */
 @media (max-width: 640px) {
-  .actions button {
+  .actions .ctaButton {
     padding-left: var(--space-3);
     padding-right: var(--space-3);
   }
