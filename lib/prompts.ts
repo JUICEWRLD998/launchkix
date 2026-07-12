@@ -124,9 +124,9 @@ export function buildSectionPrompt(
       ? "iOS only"
       : "Android only";
 
-  const sectionSchemas = {
+  const sectionSchemas: Record<string, string> = {
     appStore: `{
-  "title": "string (max 30 chars)",
+  "title": "string (max 30 chars, no subtitle appended)",
   "subtitle": "string (max 30 chars)",
   "promotionalText": "string (max 170 chars)",
   "description": "string (full description)",
@@ -137,28 +137,27 @@ export function buildSectionPrompt(
   "fullDescription": "string (full description)"
 }`,
     aso: `{
-  "primaryKeywords": ["string array, 5-10 keywords"],
-  "secondaryKeywords": ["string array, 5-15 keywords"],
-  "longTail": ["string array, 3-10 phrases"],
-  "tips": ["string array, 3-5 tips"]
+  "primaryKeywords": ["5-10 keyword strings"],
+  "secondaryKeywords": ["5-15 keyword strings"],
+  "longTail": ["3-10 long-tail phrase strings"],
+  "tips": ["3-5 ASO tip strings"]
 }`,
     socialCalendar: `[
-  {
-    "day": 1,
-    "platform": "X",
-    "hook": "string",
-    "body": "string",
-    "cta": "string"
-  }
-  // ... 7 total posts
+  { "day": 1, "platform": "X", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 2, "platform": "LinkedIn", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 3, "platform": "Instagram", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 4, "platform": "X", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 5, "platform": "LinkedIn", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 6, "platform": "Instagram", "hook": "string", "body": "string", "cta": "string" },
+  { "day": 7, "platform": "X", "hook": "string", "body": "string", "cta": "string" }
 ]`,
     email: `{
-  "subjects": ["string array, 3-5 options"],
+  "subjects": ["3-5 subject line strings"],
   "body": "string (email body)"
 }`,
     communityPost: `{
-  "title": "string",
-  "body": "string"
+  "title": "string (Reddit/ProductHunt-style title)",
+  "body": "string (authentic post body)"
 }`,
   };
 
