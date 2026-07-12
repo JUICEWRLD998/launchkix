@@ -45,10 +45,10 @@ const CATEGORIES = [
 ];
 
 const TONE_OPTIONS: { value: Tone; label: string; desc: string }[] = [
-  { value: "friendly", label: "Friendly", desc: "Warm & approachable" },
-  { value: "professional", label: "Professional", desc: "Clear & trustworthy" },
-  { value: "bold", label: "Bold", desc: "Confident & direct" },
-  { value: "playful", label: "Playful", desc: "Fun & energetic" },
+  { value: "friendly", label: "Friendly", desc: "Warm and approachable" },
+  { value: "professional", label: "Professional", desc: "Clear and trustworthy" },
+  { value: "bold", label: "Bold", desc: "Confident and direct" },
+  { value: "playful", label: "Playful", desc: "Light and energetic" },
 ];
 
 const GOAL_OPTIONS: { value: Goal; label: string }[] = [
@@ -124,9 +124,9 @@ export function AppIntakeForm({
       className={clsx(styles.form, patterns.glassCard, patterns.edgeLight)}
     >
       <div className={styles.header}>
-        <h2 className={styles.title}>Your App</h2>
+        <h2 className={styles.title}>Launch Brief</h2>
         <p className={styles.subtitle}>
-          Fill in the details and we&apos;ll generate your complete launch kit.
+          Add the core app details. LauchKix will turn them into launch-ready marketing assets.
         </p>
       </div>
 
@@ -157,7 +157,7 @@ export function AppIntakeForm({
         <Textarea
           label="App Description"
           required
-          placeholder="Describe your app — what it does, key features, and what makes it unique..."
+          placeholder="Describe what the app does, the core features, and what makes it useful."
           value={values.description}
           onChange={(e) =>
             setValues((p) => ({ ...p, description: e.target.value }))
@@ -185,7 +185,7 @@ export function AppIntakeForm({
                   values.platforms.includes(p) && styles.platformBtnActive
                 )}
               >
-                {p === "ios" ? "🍎 iOS" : "🤖 Android"}
+                {p === "ios" ? "iOS" : "Android"}
               </button>
             ))}
           </div>
@@ -206,7 +206,7 @@ export function AppIntakeForm({
           }
           error={fieldError("category")}
         >
-          <option value="">Select a category...</option>
+          <option value="">Select a category</option>
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -275,7 +275,7 @@ export function AppIntakeForm({
       {/* AI trust badge */}
       <div className={styles.trustRow}>
         <Badge variant="accent" size="sm">
-          AI-generated · edit before publishing
+          Review generated copy before publishing
         </Badge>
       </div>
 

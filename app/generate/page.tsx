@@ -2,7 +2,6 @@
 
 import { useState, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, Sparkles } from "lucide-react";
 import { AppIntakeForm } from "@/components/form/AppIntakeForm";
 import { ExampleChips } from "@/components/form/ExampleChips";
 import { KitResult, KitResultSkeleton } from "@/components/kit/KitResult";
@@ -148,9 +147,6 @@ export default function GeneratePage() {
                     exit={{ opacity: 0 }}
                     className={styles.emptyState}
                   >
-                    <div className={styles.emptyIcon} aria-hidden="true">
-                      <Sparkles size={34} strokeWidth={1.75} />
-                    </div>
                     <h2 className={styles.emptyTitle}>
                       Your launch kit will appear here
                     </h2>
@@ -196,9 +192,6 @@ export default function GeneratePage() {
                     exit={{ opacity: 0 }}
                     className={styles.errorState}
                   >
-                    <div className={styles.errorIcon} aria-hidden="true">
-                      <AlertTriangle size={34} strokeWidth={1.75} />
-                    </div>
                     <h2 className={styles.errorTitle}>Generation failed</h2>
                     <p className={styles.errorBody}>{errorMsg}</p>
                     <button

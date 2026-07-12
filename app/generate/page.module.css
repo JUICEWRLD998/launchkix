@@ -76,17 +76,6 @@
   gap: var(--space-4);
 }
 
-.emptyIcon {
-  display: inline-grid;
-  place-items: center;
-  width: 4rem;
-  height: 4rem;
-  color: var(--accent);
-  background: var(--accent-muted);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-full);
-}
-
 .emptyTitle {
   font-family: var(--font-display);
   font-size: var(--fs-step-2);
@@ -175,17 +164,6 @@
   border-radius: var(--card-radius);
   background: var(--danger-muted);
   gap: var(--space-4);
-}
-
-.errorIcon {
-  display: inline-grid;
-  place-items: center;
-  width: 4rem;
-  height: 4rem;
-  color: var(--danger);
-  background: var(--surface-1);
-  border: 1px solid var(--danger);
-  border-radius: var(--radius-full);
 }
 
 .errorTitle {

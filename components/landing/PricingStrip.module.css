@@ -170,6 +170,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card {
+    transition-duration: 0.01ms;
+  }
   .card:hover {
     transform: none;
   }
