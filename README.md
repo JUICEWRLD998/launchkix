@@ -6,54 +6,13 @@ AI-powered launch marketing kits for mobile apps in under 60 seconds. Built for 
 
 ---
 
-## 🚀 What It Does
+## 🎬 Demo
 
-LauchKix generates complete, professional launch marketing kits for mobile apps in under 60 seconds. Input your app details once and get 8 ready-to-use marketing sections:
-
-- **App Store & Google Play listings** (character-limit optimized)
-- **ASO keyword pack** with optimization strategy
-- **7-day social media calendar** (X, LinkedIn, Instagram)
-- **Launch email** with multiple subject lines
-- **Community post** (Reddit/Product Hunt style)
-- **Landing page copy** with hero and CTAs
-- **Press blurb** and founder quote templates
-- **Export options**: Markdown, JSON, or copy individual sections
-
-All content is regeneratable section-by-section without losing your other work.
+**[Watch Demo Video](https://youtu.be/eDXk20nQhcA)** | **[Try Live Demo](https://lauchkix.vercel.app)**
 
 ---
 
-## 💻 Quick Start
-
-```bash
-# Clone and install
-git clone https://github.com/JUICEWRLD998/lauchkix.git
-cd lauchkix
-npm install
-
-# Configure API key
-cp .env.example .env.local
-# Add your OPENROUTER_API_KEY to .env.local
-
-# Run locally
-npm run dev
-# Open http://localhost:3000
-```
-
-**Usage:** Navigate to `/generate` → Fill in app details → Click "Generate Launch Kit" → Copy, regenerate, or export sections
-
----
-
-## 🛠️ Tech Stack
-
-- **Next.js 16** + TypeScript + React 19
-- **Gemini 2.5 Flash** via OpenRouter for AI generation
-- **CSS Modules** + OKLCH design tokens
-- **Framer Motion** for animations
-
----
-
-## 📊 Business Overview
+## 📋 Business Questionnaire
 
 ### 1. What does your application/service do?
 
@@ -115,7 +74,7 @@ The platform uses Gemini 2.0 Flash via OpenRouter with structured JSON output, t
 - Phase 3 (Q3): German, Portuguese
 - Phase 4 (Q4): Japanese, Korean, Arabic
 
-**Market Entry Strategy:**
+**Market Entry Strategy:**  
 Start with US/UK/Canada (same timezone, language, payment infrastructure) → Expand to English-speaking Commonwealth countries (AU, SG) → Enter EU with multi-language support → Target APAC with localized pricing and partnerships
 
 ### 4. Who are your competitors?
@@ -153,6 +112,8 @@ Start with US/UK/Canada (same timezone, language, payment infrastructure) → Ex
 - Long contracts and timelines, overkill for indie launches
 
 **Key Gap:** No competitor combines AI generation + mobile-specific optimization + structured kit format + sub-60-second speed + section regeneration + <$20/mo pricing.
+
+**Competitive Comparison:**
 
 | Solution | LauchKix | Copy.ai/Jasper | Freelancers | ChatGPT |
 |----------|----------|----------------|-------------|---------|
@@ -203,7 +164,54 @@ Start with US/UK/Canada (same timezone, language, payment infrastructure) → Ex
 - ROI after 2.5 uses vs. freelancer cost
 - Free tier (1/day) lowers barrier to entry
 
-**Quantified Comparison:**
+---
+
+## 🚀 Product Features
+
+LauchKix generates complete, professional launch marketing kits in under 60 seconds:
+
+- **App Store & Google Play listings** (character-limit optimized)
+- **ASO keyword pack** with optimization strategy
+- **7-day social media calendar** (X, LinkedIn, Instagram)
+- **Launch email** with multiple subject lines
+- **Community post** (Reddit/Product Hunt style)
+- **Landing page copy** with hero and CTAs
+- **Press blurb** and founder quote templates
+- **Export options**: Markdown, JSON, or copy individual sections
+
+All content is regeneratable section-by-section without losing your other work.
+
+---
+
+## 💻 Quick Start
+
+```bash
+# Clone and install
+git clone https://github.com/JUICEWRLD998/lauchkix.git
+cd lauchkix
+npm install
+
+# Configure API key
+cp .env.example .env.local
+# Add your OPENROUTER_API_KEY to .env.local
+
+# Run locally
+npm run dev
+# Open http://localhost:3000
+```
+
+**Usage:** Navigate to `/generate` → Fill in app details → Click "Generate Launch Kit" → Copy, regenerate, or export sections
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 16** + TypeScript + React 19
+- **Gemini 2.0 Flash** via OpenRouter for AI generation
+- **CSS Modules** + OKLCH design tokens
+- **Framer Motion** for animations
+
+---
 
 ## 🏆 Built For HackOnVibe 2026
 
